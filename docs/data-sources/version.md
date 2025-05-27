@@ -1,33 +1,33 @@
 ---
-page_title: 'shoreline_version (Data Source)'
+page_title: 'mcahr_version (Data Source)'
 subcategory: ''
 description: |-
 ---
 
-# shoreline_version (Data Source)
+# mcahr_version (Data Source)
 
-The [shoreline_version](https://docs.shoreline.io/op/packs#shoreline_version) [data source](https://www.terraform.io/language/data-sources) uses Shoreline Op's [backend_version](https://docs.shoreline.io/op/commands/backend_version) functionality to get the current Shoreline version.
+The mcahr_version data source uses NVIDIA Mission Control autonomous hardware recovery Op's backend_version functionality to get the current NVIDIA Mission Control autonomous hardware recovery version.
 
 ## Usage
 
-1. Define an empty `shoreline_version` data source block.
+1. Define an empty `mcahr_version` data source block.
 
    ```hcl
-   data "shoreline_version" "version" {
+   data "mcahr_version" "version" {
    }
    ```
 
-   -> You can set the `shoreline_version` data name to anything you'd like, but `version` is the recommended best practice.
+   -> You can set the `mcahr_version` data name to anything you'd like, but `version` is the recommended best practice.
 
-2. Define a `backend_version` [output](https://www.terraform.io/language/values/outputs) block.
+2. Define a `backend_version` output block.
 
    ```hcl
    output "backend_version" {
-     value = data.shoreline_version.version
+     value = data.mcahr_version.version
    }
    ```
 
-   Set the `value` to the previously-defined [data source](https://www.terraform.io/language/data-sources) name.  The Shoreline backend automatically retrieves version from the `shoreline_version` data source block and passes the value to the `backend_version` output value.
+   Set the `value` to the previously-defined data source name.  The NVIDIA Mission Control autonomous hardware recovery backend automatically retrieves version from the `mcahr_version` data source block and passes the value to the `backend_version` output value.
 
    Executing `terraform apply` will now include a `backend_version` block output:
    
@@ -49,16 +49,16 @@ The [shoreline_version](https://docs.shoreline.io/op/packs#shoreline_version) [d
    ```
 ### Conditionally creating objects
 
-You can use the [shoreline_version](https://docs.shoreline.io/op/packs#shoreline_version) [data source](https://www.terraform.io/language/data-sources) definition to conditionally create objects.
+You can use the mcahr_version data source definition to conditionally create objects.
 
-For example, here we're only creating the `example_notebook` [Notebook](https://docs.shoreline.io/notebooks) object if the current major version is `5` or greater:
+For example, here we're only creating the `example_notebook` Notebook object if the current major version is `5` or greater:
 
 ```hcl
-data "shoreline_version" "version" {
+data "mcahr_version" "version" {
 }
 
-resource "shoreline_notebook" "example_notebook" {
-  count = data.shoreline_version.version.major >= 5 ? 1 : 0
+resource "mcahr_notebook" "example_notebook" {
+  count = data.mcahr_version.version.major >= 5 ? 1 : 0
   name = "example_notebook"
   description = "A sample notebook."
   data = file("${path.module}/data/example-notebook.json")
