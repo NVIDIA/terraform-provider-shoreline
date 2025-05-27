@@ -1,41 +1,41 @@
 ---
-page_title: "mcahr_bot Resource - terraform-provider-mcahr"
+page_title: "shoreline_bot Resource - terraform-provider-shoreline"
 subcategory: ""
 description: |-
   Alarms use Bots to execute automated Actions.
 ---
 
-# mcahr_bot (Resource)
+# shoreline_bot (Resource)
 
-A Bot connects a single Alarm to one or more Actions. When the Alarm is raised the Bot fires all associated and enabled Actions to close the auto-remediation loop.
+A Bot connects a single [Alarm](https://docs.shoreline.io/alarms) to one or more [Actions](https://docs.shoreline.io/actions). When the [Alarm](https://docs.shoreline.io/alarms) is raised the [Bot](https://docs.shoreline.io/bots) fires all associated and enabled [Actions](https://docs.shoreline.io/actions) to close the auto-remediation loop.
 
 ## Required Properties
 
-Each Bot has various configurable properties that determine its behavior. The minimal required properties to create a Bot are:
+Each Bot has various configurable [properties](https://docs.shoreline.io/bots/properties) that determine its behavior. The minimal required properties to [create a Bot](https://docs.shoreline.io/bots#create-a-bot) are:
 
-- name - The name of the Bot
-- command - An `if-then-fi` statement containing the Alarm name and Action name associated with the Bot. Alternatively, the `command` property can be a custom Linux command.
+- [name](https://docs.shoreline.io/bots/properties/name) - The name of the Bot
+- [command](https://docs.shoreline.io/bots/properties/command) - An `if-then-fi` statement containing the [Alarm](https://docs.shoreline.io/alarms) name and [Action](https://docs.shoreline.io/actions) name associated with the Bot. Alternatively, the `command` property can be a custom Linux command.
 
 ## Usage
 
-The following example creates a Bot named `cpu_bot` that executes the `restart_action` Action when the `high_cpu_alarm` Alarm's fire_query is true:
+The following example creates a [Bot](https://docs.shoreline.io/bots) named `cpu_bot` that executes the `restart_action` [Action](https://docs.shoreline.io/actions) when the `high_cpu_alarm` [Alarm's](https://docs.shoreline.io/alarms) [fire_query](https://docs.shoreline.io/alarms/properties#fire_query) is true:
 
 ```tf
-resource "mcahr_bot" "cpu_bot" {
+resource "shoreline_bot" "cpu_bot" {
   name = "cpu_bot"
-  command = "if ${ mcahr_alarm.high_cpu_alarm.name} then ${ mcahr_action.restart_action.name} fi"
+  command = "if ${shoreline_alarm.high_cpu_alarm.name} then ${shoreline_action.restart_action.name} fi"
   description = "Restart on high CPU usage."
   enabled = true
 }
 ```
 
-The `command` property specifies the Alarm and Action that are connected by this Bot. It uses Terraform's built-in string interpolation to evaluate the name of both the Alarm and Action.
+The `command` property specifies the [Alarm](https://docs.shoreline.io/alarms) and [Action](https://docs.shoreline.io/actions) that are connected by this [Bot](https://docs.shoreline.io/bots). It uses Terraform's [built-in string interpolation](https://www.terraform.io/docs/language/expressions/strings.html#interpolation) to evaluate the name of both the [Alarm](https://docs.shoreline.io/alarms) and [Action](https://docs.shoreline.io/actions).
 
 ### Advanced Usage
 
-Configuring a combination of an Alarm, Action, and Bot closes the fundamental auto-remediation loop provided by NVIDIA Mission Control autonomous hardware recovery.  Below we're using portions of NVIDIA Mission Control autonomous hardware recovery's JVM Op Pack to create a full incident automation loop when JVM memory usage gets too high.
+Configuring a combination of an [Alarm](https://docs.shoreline.io/alarms), [Action](https://docs.shoreline.io/actions), and [Bot](https://docs.shoreline.io/bots) closes the fundamental auto-remediation loop provided by Shoreline.  Below we're using portions of Shoreline's JVM [Op Pack](https://docs.shoreline.io/op/packs) to create a full incident automation loop when JVM memory usage gets too high.
 
-First, the `jvm_trace_check_heap` Action determines if JVM heap usage exceeds a variable-defined threshold:
+First, the `jvm_trace_check_heap` [Action](https://docs.shoreline.io/actions) determines if JVM heap usage exceeds a variable-defined threshold:
 
 ```terraform
 # Action to check the JVM heap usage on the selected resources and process.
@@ -59,7 +59,7 @@ resource "shoreline_action" "jvm_trace_check_heap" {
 }
 ```
 
-The `jvm_trace_heap_alarm` Alarm executes the `jvm_trace_check_heap` Action as part of its fire_query and clear_query:
+The `jvm_trace_heap_alarm` [Alarm](https://docs.shoreline.io/alarms) executes the `jvm_trace_check_heap` [Action](https://docs.shoreline.io/actions) as part of its [fire_query](https://docs.shoreline.io/alarms/properties#fire_query) and [clear_query](https://docs.shoreline.io/alarms/properties#clear_query):
 
 ```terraform
 # Alarm that triggers when the selected JVM heap usage exceeds the chosen size.
@@ -82,9 +82,6 @@ resource "shoreline_alarm" "jvm_trace_heap_alarm" {
   fire_long_template    = "JVM heap usage (process ${var.jvm_process_regex}) exceeded memory threshold ${var.mem_threshold} on ${var.resource_query}"
   resolve_long_template = "JVM heap usage (process ${var.jvm_process_regex}) below memory threshold ${var.mem_threshold} on ${var.resource_query}"
 
-  # low-frequency, and a linux command, so compiling won't help
-  compile_eligible = false
-
   # alarm is raised local to a resource (vs global)
   raise_for = "local"
   # raised on a linux command (not a standard metric)
@@ -100,11 +97,11 @@ resource "shoreline_alarm" "jvm_trace_heap_alarm" {
 }
 ```
 
-We define another Action called `jvm_trace_jvm_debug` that executes a bash script that dumps JVM debug data to AWS S3 before restarting the JVM:
+We define another [Action](https://docs.shoreline.io/actions) called `jvm_trace_jvm_debug` that executes a bash script that dumps JVM debug data to AWS S3 before restarting the JVM:
 
 ```tf
 # Action to dump the JVM stack-trace on the selected resources and process.
-resource "mcahr_action" "jvm_trace_jvm_debug" {
+resource "shoreline_action" "jvm_trace_jvm_debug" {
   name = "${var.namespace}_jvm_dump_stack"
   description = "Dump JVM process (by regex) heap, thread and GC info to s3, then kill the pod."
   # Parameters passed in: the regular expression to select process name, and destination AWS S3 bucket.
@@ -126,7 +123,7 @@ resource "mcahr_action" "jvm_trace_jvm_debug" {
 }
 ```
 
-Lastly, we connect the `jvm_trace_heap_alarm` Alarm and the `jvm_trace_check_heap` Action with the `jvm_trace_dump_bot` Bot:
+Lastly, we connect the `jvm_trace_heap_alarm` [Alarm](https://docs.shoreline.io/alarms) and the `jvm_trace_check_heap` [Action](https://docs.shoreline.io/actions) with the `jvm_trace_dump_bot` [Bot](https://docs.shoreline.io/bots):
 
 ```terraform
 # Bot that fires the stack-dump action when the jvm heap exceeds the chosen memory threshold.
@@ -146,7 +143,7 @@ resource "shoreline_bot" "jvm_trace_dump_bot" {
 
 Now, anytime JVM memory exceeds our defined threshold the JVM is automatically restarted and the debug data is exported for further analysis.
 
--> See the NVIDIA Mission Control autonomous hardware recovery Bots Documentation for more info.
+-> See the Shoreline [Bots Documentation](https://docs.shoreline.io/bots) for more info.
 
 <!-- schema generated by tfplugindocs -->
 ## Schema
@@ -163,7 +160,7 @@ Now, anytime JVM memory exceeds our defined threshold the JVM is automatically r
 - `communication_workspace` (String) A string value denoting the slack workspace where notifications related to the object should be sent to. Defaults to ``.
 - `description` (String) A user-friendly explanation of an object. Defaults to ``.
 - `enabled` (Boolean) If the object is currently enabled or disabled. Defaults to `false`.
-- `event_type` (String) Used to tag external triggers vs 'shoreline' alarms (default). Defaults to ``.
+- `event_type` (String) Used to tag 'datadog' monitor triggers vs 'shoreline' alarms (default). Defaults to ``.
 - `family` (String) General class for an Action or Bot (e.g., custom, standard, metric, or system check). Defaults to `custom`.
 - `integration_name` (String) The name/symbol of a Shoreline integration involved in triggering the bot. Defaults to ``.
 - `monitor_id` (String) For 'datadog' monitor triggered bots, the DD monitor identifier. Defaults to ``.

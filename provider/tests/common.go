@@ -7,7 +7,7 @@ import (
 	"encoding/json"
 	"testing"
 
-	"terraform/terraform-provider/provider"
+	"shoreline.io/terraform/terraform-provider-shoreline/provider"
 )
 
 // SupportedResourceTypes contains all resource types supported by the provider

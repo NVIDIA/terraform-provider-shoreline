@@ -6,9 +6,8 @@ package tests
 import (
 	"testing"
 
-	"terraform/terraform-provider/provider"
-
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"shoreline.io/terraform/terraform-provider-shoreline/provider"
 )
 
 // Helper function to create a test resource
@@ -22,7 +21,7 @@ func createTestResource(t *testing.T, resourceType string) *schema.Resource {
 	}
 
 	// Create the resource
-	resource := provider.ResourceObject(provider.ObjectConfigJsonStr, resourceType)
+	resource := provider.ResourceShorelineObject(provider.ObjectConfigJsonStr, resourceType)
 	return resource
 }
 

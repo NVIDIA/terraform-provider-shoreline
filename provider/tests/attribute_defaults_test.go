@@ -7,7 +7,7 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
-	"terraform/terraform-provider/provider"
+	"shoreline.io/terraform/terraform-provider-shoreline/provider"
 )
 
 // TestAttributeDefaults verifies that the SetAttributeDefaultValue function

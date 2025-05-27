@@ -1,6 +1,6 @@
-# Provider Tests
+# Shoreline Provider Tests
 
-This directory contains unit tests for the Terraform provider, organized by functionality.
+This directory contains unit tests for the Terraform Shoreline provider, organized by functionality.
 
 ## Test Organization
 
