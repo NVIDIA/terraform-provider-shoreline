@@ -9,7 +9,7 @@ default: install
 REPODIR=/tmp/tf-repo/providers
 
 BINARY=terraform-provider-shoreline
-VERSION=1.15.30
+VERSION=1.15.39
 
 BUILD_ENV_VARS=-ldflags "-X 'main.RenderedProviderName=\"Shoreline\"' -X 'main.ProviderShortName=\"shoreline\"' -X 'provider.RenderedProviderName=\"Shoreline\"' -X 'provider.ProviderShortName=\"shoreline\"' -X 'provider.EnvVarsNamePrefix=\"SHORELINE\"' -X 'provider.TfLogFile=\"/tmp/tf_provider.log\"' -X 'provider.DefaultUserName=\"Shoreline\"'"
 

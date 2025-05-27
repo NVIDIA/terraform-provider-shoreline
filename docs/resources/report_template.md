@@ -1,10 +1,10 @@
 ---
-page_title: 'mcahr_report_template Resource - terraform-provider-mcahr'
+page_title: 'shoreline_report_template Resource - terraform-provider-shoreline'
 subcategory: ''
 description: |-
 ---
 
-# mcahr_report_template (Resource)
+# shoreline_report_template (Resource)
 
 
 ## Properties
