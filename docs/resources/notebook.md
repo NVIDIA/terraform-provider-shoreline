@@ -1,25 +1,25 @@
 ---
-page_title: "shoreline_notebook Resource - terraform-provider-shoreline"
+page_title: "mcahr_notebook Resource - terraform-provider-mcahr"
 subcategory: ""
 description: |- Notebooks replace static runbooks by capturing interactive debug and remediation sessions in a convenient UI.
 ---
 
-# shoreline_notebook (Resource)
+# mcahr_notebook (Resource)
 
-Through Shoreline's web-based UI, [Notebooks](https://docs.shoreline.io/notebooks) automatically capture an entire debug and remediation session -- which can optionally be associated with a specific [Alarm](https://docs.shoreline.io/alarms) -- and then be shared with other team members to streamline future incident response. With Notebooks you can:
+Through NVIDIA Mission Control autonomous hardware recovery's web-based UI, Notebooks automatically capture an entire debug and remediation session -- which can optionally be associated with a specific Alarm -- and then be shared with other team members to streamline future incident response. With Notebooks you can:
 
-- Create a series of interactive [Op statement cells](https://docs.shoreline.io/notebooks#op-statements) allowing you to execute [Op commands](https://docs.shoreline.io/op/commands) within your browser -- all without installing or configuring the local [CLI](https://docs.shoreline.io/cli).
-- Define and use [dynamic parameters](https://docs.shoreline.io/notebooks/parameters) across Notebook Op cells.
-- Memorialize Notebooks with [historical snapshots](https://docs.shoreline.io/notebooks/runs).
-- Add [Markdown-based notes](https://docs.shoreline.io/notebooks#notes) to inform operators how to use the Notebook.
-- [Associate](https://docs.shoreline.io/notebooks#alarm-association) existing [Alarms](https://docs.shoreline.io/alarms) and Notebooks, allowing on-call members to click through to an interactive debugging and remediation Notebook directly from the triggered [Alarm](https://docs.shoreline.io/alarms) UI.
+- Create a series of interactive Op statement cells allowing you to execute Op commands within your browser -- all without installing or configuring the local CLI.
+- Define and use dynamic parameters across Notebook Op cells.
+- Memorialize Notebooks with historical snapshots.
+- Add Markdown-based notes to inform operators how to use the Notebook.
+- Associate existing Alarms and Notebooks, allowing on-call members to click through to an interactive debugging and remediation Notebook directly from the triggered Alarm UI.
 
 ## Required Properties
 
-Each Notebook uses a variety of properties to determine its behavior. The required properties when [creating a Notebook](https://docs.shoreline.io/notebooks#create-a-notebook) are:
+Each Notebook uses a variety of properties to determine its behavior. The required properties when creating a Notebook are:
 
 - `name`: string - A unique symbol name for the Notebook object.
-- `cells`: list(object) - A list of cells represented by JSON objects. Cells may either be [Op statement cells](https://docs.shoreline.io/notebooks#op-statements) or [Markdown cells](https://docs.shoreline.io/notebooks#notes).
+- `cells`: list(object) - A list of cells represented by JSON objects. Cells may either be Op statement cells or Markdown cells.
 
 ### Download a Notebook as a Terraform resource
 
@@ -30,19 +30,18 @@ You can download an entire Notebook directly as a Terraform resource. This will 
 
 ## Defining a Notebook using the legacy `data` property
 
-You can also export the Notebook's configuration as a JSON file and then freely modify, share, and [upload](https://docs.shoreline.io/notebooks#upload-a-notebook) this Notebook at any time.
+You can also export the Notebook's configuration as a JSON file and then freely modify, share, and upload this Notebook at any time.
 
 Note: this way of defining is **deprecated**. Please refer to the above instructions using the new format.
 
-The following example creates a [Notebook](https://docs.shoreline.io/notebooks) named `my_notebook`.
+The following example creates a Notebook named `my_notebook`.
 
-1. [Download a Notebook](https://docs.shoreline.io/notebooks#download-a-notebook) as JSON.
+1. Download a Notebook as JSON.
 2. Only keep the `cells`, `params`, `external_params`, and `enabled` fields fron the JSON file. Note: `externalParams` needs to be renamed to `external_params` in the JSON file.
 3. Save the Notebook JSON to local path within your Terraform project.
-4. Define a new `shoreline_notebook` Terraform resource in your Terraform configuration that points the `data` property to the correct local module path.
+4. Define a new `mcahr_notebook` Terraform resource in your Terraform configuration that points the `data` property to the correct local module path.
 
    ```terraform
-# DEPRECATED: Use the `cells` field instead
 resource "shoreline_runbook" "data_runbook" {
   name        = "data_runbook"
   description = "A sample runbook defined using the data field, which loads the runbook configuration from a separate JSON file."
@@ -135,7 +134,6 @@ resource "shoreline_runbook" "full_runbook" {
   communication_execution_notifications = true
   filter_resource_to_action             = true
   enabled                               = true
-  secret_names                          = ["<secret_name_1>", "<secret_name_2>"]
 }
 
 
@@ -145,7 +143,7 @@ resource "shoreline_runbook" "minimal_runbook" {
 }
 ```
 
--> See the Shoreline [Notebooks Documentation](https://docs.shoreline.io/notebooks) for more info on creating and using Notebooks.
+-> See the NVIDIA Mission Control autonomous hardware recovery Notebooks Documentation for more info on creating and using Notebooks.
 
 <!-- schema generated by tfplugindocs -->
 ## Schema

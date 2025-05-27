@@ -27,5 +27,4 @@ resource "shoreline_system_settings" "system_settings" {
   maintenance_mode_enabled    = false
   allowed_tags                = [".*"]
   skipped_tags                = []
-  managed_secrets             = "LOCAL"
 }
