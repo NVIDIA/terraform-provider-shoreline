@@ -11,7 +11,7 @@ REPODIR=/tmp/tf-repo/providers
 BINARY=terraform-provider-shoreline
 VERSION=1.15.39
 
-BUILD_ENV_VARS=-ldflags "-X 'main.RenderedProviderName=\"Shoreline\"' -X 'main.ProviderShortName=\"shoreline\"' -X 'provider.RenderedProviderName=\"Shoreline\"' -X 'provider.ProviderShortName=\"shoreline\"' -X 'provider.EnvVarsNamePrefix=\"SHORELINE\"' -X 'provider.TfLogFile=\"/tmp/tf_provider.log\"' -X 'provider.DefaultUserName=\"Shoreline\"'"
+BUILD_ENV_VARS=-ldflags " -X 'main.ProviderPath=registry.opentofu.org/shorelinesoftware/shoreline' -X 'terraform/terraform-provider/provider.RenderedProviderName=\"Shoreline\"' -X 'terraform/terraform-provider/provider.ProviderShortName=shoreline' -X 'terraform/terraform-provider/provider.EnvVarsNamePrefix=SHORELINE' -X 'terraform/terraform-provider/provider.TfLogFile=/tmp/tf_provider.log' -X 'terraform/terraform-provider/provider.DefaultUserName=Shoreline'"
 
 
 // NOTE: this only works for 64 bit linux and MacOs ("darwin")
