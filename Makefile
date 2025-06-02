@@ -11,6 +11,7 @@ REPODIR=/tmp/tf-repo/providers
 BINARY=terraform-provider-shoreline
 VERSION=1.15.41
 
+# IMPORTANT: When changing these build env vars, make sure to update the github release workflows files as well (the goreleaser env vars)
 BUILD_ENV_VARS=-ldflags " -X 'main.ProviderPath=registry.opentofu.org/shorelinesoftware/shoreline' -X 'terraform/terraform-provider/provider.RenderedProviderName=\"Shoreline\"' -X 'terraform/terraform-provider/provider.ProviderShortName=shoreline' -X 'terraform/terraform-provider/provider.EnvVarsNamePrefix=SHORELINE' -X 'terraform/terraform-provider/provider.TfLogFile=/tmp/tf_provider.log' -X 'terraform/terraform-provider/provider.DefaultUserName=Shoreline'"
 
 

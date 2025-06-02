@@ -6,17 +6,6 @@ on:
 jobs:
   terraform-test-and-build:
     runs-on: ubuntu-latest
-    env:
-      PROVIDER_SHORT_NAME: shoreline
-      RENDERED_PROVIDER_NAME: Shoreline
-      DEFAULT_USER_NAME: Shoreline
-      DEFAULT_TRIGGER_SOURCE: shoreline
-      PROVIDER_PATH: registry.opentofu.org/shorelinesoftware/shoreline
-      ENV_VARS_NAME_PREFIX: SHORELINE
-      TF_LOG_FILE: /tmp/tf_provider.log
-      SHORELINE_RETRIES: 5
-      TF_ACC: 0
-      SHORELINE_DEBUG: false
     steps:
       - name: build
         uses: actions/checkout@v2

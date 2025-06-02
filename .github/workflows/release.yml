@@ -118,6 +118,13 @@ jobs:
           GNUPGHOME: ${{ env.GNUPGHOME }}
           # GitHub sets this automatically
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Provider-specific build variables
+          PROVIDER_PATH: "registry.opentofu.org/shorelinesoftware/shoreline"
+          RENDERED_PROVIDER_NAME: "Shoreline"
+          PROVIDER_SHORT_NAME: "shoreline"
+          ENV_VARS_NAME_PREFIX: "SHORELINE"
+          TF_LOG_FILE: "/tmp/tf_provider.log"
+          DEFAULT_USER_NAME: "Shoreline"
       -
         name: Clean up GPG
         # Always run this step, even if goreleaser fails
