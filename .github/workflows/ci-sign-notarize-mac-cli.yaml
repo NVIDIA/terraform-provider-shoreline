@@ -5,6 +5,10 @@ on:
       version:
         description: Release version
         required: true
+
+permissions:
+  contents: write
+
 jobs:
   sign-and-notarize-mac-cli:
     runs-on: macos-latest
