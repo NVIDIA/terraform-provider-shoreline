@@ -54,4 +54,4 @@ Shoreline integration. A third-party integration (e.g. DataDog, NewRelic, etc).
 ### Read-Only
 
 - `id` (String) The ID of this resource.
-- `type` (String) The type of object (i.e., Alarm, Action, Bot, Metric, Resource, or File).
+- `type` (String) The type of object (i.e., Alarm, Action, Bot, Resource, or File).
