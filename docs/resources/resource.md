@@ -1,11 +1,11 @@
 ---
-page_title: "shoreline_resource Resource - terraform-provider-shoreline"
+page_title: "Shoreline_resource Resource - terraform-provider-shoreline"
 subcategory: ""
 description: |-
   Shoreline resource. A server or compute resource in the system (e.g. host, pod, container).
 ---
 
-# shoreline_resource (Resource)
+# Shoreline_resource (Resource)
 
 Resources are the infrastructure objects managed by Shoreline.  A Resources refers to a specific host, pod, or container throughout the Shoreline platform. It may also refer to a more distinct entity, such as a virtual machine or a database instance.
 
@@ -23,7 +23,7 @@ Resources types are platform and provider agnostic. So whether it's a fleet of p
 Shoreline Resources are effectively aliases for more complex Resource queries.  For example, the following definition creates a custom Resource called `az_k8s` as an alias for the full query to target Kubernetes pods on Azure:
 
 ```tf
-resource "shoreline_resource" "az_k8s" {
+resource "Shoreline_resource" "az_k8s" {
   name        = "${var.namespace}_az_k8s"
   value       = "hosts | k8s=true | cloud_provider='azure' | pods | namespace=[\"${var.namespace}\"]"
   description = "All Shoreline Kubernetes pods on Azure"
@@ -37,15 +37,10 @@ resource "shoreline_resource" "az_k8s" {
 
 ### Required
 
-- `name` (String) The name/symbol for the object within Shoreline and the op language (must be unique, only alphanumeric/underscore).
+- `name` (String) The name/symbol for the resource within the system (must be unique, only alphanumeric/underscore).
 - `value` (String) The Op statement that defines a Resource.
 
 ### Optional
 
-- `description` (String) A user-friendly explanation of an object. Defaults to ``.
-- `params` (List of String) Named variables to pass to an object (e.g. an Action).
-
-### Read-Only
-
-- `id` (String) The ID of this resource.
-- `type` (String) The type of object (i.e., Alarm, Action, Bot, Resource, or File).
+- `description` (String) A user-friendly explanation of the resource.
+- `params` (List of String) Named variables to pass to the resource.
