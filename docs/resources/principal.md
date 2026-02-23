@@ -3,12 +3,12 @@
 page_title: "shoreline_principal Resource - Shoreline"
 subcategory: ""
 description: |-
-  Shoreline principal. An authorization group (e.g. Okta groups). Note: Admin privilege (in Shoreline) to create principal objects.
+  Principal. An authorization group (e.g. Okta groups). Note: Admin privilege (in the platform) is required to create principal objects.
 ---
 
 # shoreline_principal (Resource)
 
-Shoreline principal. An authorization group (e.g. Okta groups). Note: Admin privilege (in Shoreline) to create principal objects.
+Principal. An authorization group (e.g. Okta groups). Note: Admin privilege (in the platform) is required to create principal objects.
 
 
 
