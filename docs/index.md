@@ -85,6 +85,11 @@ resource "shoreline_bot" "cpu_bot" {
 - `token` (String, Sensitive) Customer/user-specific authorization token for the "Shoreline" API server. May be provided via `SHORELINE_TOKEN` env variable.
 - `url` (String) Customer-specific URL for the "Shoreline" API server.
 
+## Security considerations
+
+* **Token delivery:** prefer the `SHORELINE_TOKEN` environment variable (read during `Configure`, bypasses state and plan output). Never hardcoded in a provider block or a .tfvars file.
+* **Relayed commands:** `shoreline_action`, `shoreline_bot`, and `shoreline_runbook` send their `command` to the Shoreline backend for execution on platform-managed agents — vet and pin any imported modules that produce them.
+
 ## Third-Party Software
 
 The Shoreline Terraform Provider was built using the [Terraform Plugin Framework v1.15.0](https://github.com/hashicorp/terraform-plugin-framework/releases/tag/v1.15.0).
