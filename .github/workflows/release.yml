@@ -182,8 +182,8 @@ jobs:
           fi
           
           # Upload to NGC
-          # Resource path: nvidian/shoreline/shoreline_terraform_provider
-          "$SCRIPT_PATH" nvidian/shoreline/shoreline_terraform_provider:${VERSION} --source "$ARCHIVE_NAME"
+          # Resource path: 0948254661288589/shoreline_terraform_provider
+          "$SCRIPT_PATH" 0948254661288589/shoreline_terraform_provider:${VERSION} --source "$ARCHIVE_NAME"
 
       -
         name: Clean up GPG
